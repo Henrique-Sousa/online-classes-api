@@ -91,10 +91,22 @@ test('GET /classes/:id', async () => {
     .expect(200);
 
   const id = classes.body[0]._id;
-  
+
   const result = await request(app)
     .get(`/classes/${id}`)
     .expect('Content-Type', /json/)
     .expect(200);
   expect(result.body.name).toBe('Aula 1');
+});
+
+test('POST /classes', async () => {
+  await request(app)
+    .post('/classes')
+    .send(class1);
+
+  const result = await Class.find();
+  expect(result);
+  if (result) {
+    expect(result[0].description).toBe('Primeira aula');
+  }
 });
