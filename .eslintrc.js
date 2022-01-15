@@ -15,7 +15,7 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
-    jest,
+    'jest',
   ],
   ignorePatterns: ['node_modules/', 'build/'],
   rules: {
@@ -23,7 +23,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'import/extensions': [
       'error',
-      ignorePackages,
+      'ignorePackages',
       {
         js: 'never',
         ts: 'never',
