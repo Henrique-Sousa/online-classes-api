@@ -20,6 +20,7 @@
   },
   "homepage": "https://gitlab.com/Henrique-Sousa/tindin-teste-desenvolvedor-backend#readme",
   "dependencies": {
+    "@types/supertest": "^2.0.11",
     "express": "^4.17.2",
     "mongoose": "^6.1.6"
   },
