@@ -15,14 +15,15 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
-    'jest',
+    jest,
   ],
   ignorePatterns: ['node_modules/', 'build/'],
   rules: {
-    'camelcase': 'off',
+    camelcase: 'off',
+    'no-underscore-dangle': 'off',
     'import/extensions': [
       'error',
-      'ignorePackages',
+      ignorePackages,
       {
         js: 'never',
         ts: 'never',
