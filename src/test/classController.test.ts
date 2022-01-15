@@ -12,9 +12,11 @@ beforeEach(() => (
   run().catch((err) => console.log(err))
 ));
 
-afterEach(() => (
-  connection.close()
-));
+afterEach(async () => {
+  await Class.remove({ name: 'Aula 1' });
+  await Class.remove({ name: 'Aula 2' });
+  await connection.close();
+});
 
 interface SentData {
   name: string,
@@ -77,6 +79,22 @@ test('GET /classes', async () => {
     .expect(200);
   expect(result.body[0].name).toBe('Aula 1');
   expect(result.body[1].name).toBe('Aula 2');
-  await Class.remove({ name: 'Aula 1' });
-  await Class.remove({ name: 'Aula 2' });
+});
+
+test('GET /classes/:id', async () => {
+  insertObject(class1);
+  insertObject(class2);
+
+  const classes = await request(app)
+    .get('/classes')
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  const id = classes.body[0]._id;
+  
+  const result = await request(app)
+    .get(`/classes/${id}`)
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.name).toBe('Aula 1');
 });
