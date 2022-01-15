@@ -17,4 +17,23 @@ module.exports = {
     '@typescript-eslint',
     'jest',
   ],
+  ignorePatterns: ['node_modules/', 'build/'],
+  rules: {
+    'camelcase': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+      },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
+  },
 };
