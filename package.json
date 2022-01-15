@@ -6,7 +6,8 @@
     "start": "node build/index.js",
     "build": "tsc",
     "clean": "rm -rf build",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint \"**/*.{js,ts}\""
   },
   "repository": {
     "type": "git",
