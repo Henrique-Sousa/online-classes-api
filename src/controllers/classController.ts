@@ -33,7 +33,62 @@ export const createClass: controllerFunction = async (req, res, next) => {
 
 export const getAllClasses: controllerFunction = async (req, res, next) => {
   const classes = await Class.find();
-  res.send(classes);
+  const classesToSend = [];
+  let last_comment;
+  let last_comment_date;
+
+  for (const class_ of classes) {
+    const {
+      _id,
+      name,
+      description,
+      video,
+      date_init,
+      date_end,
+      date_created,
+      date_updated,
+      total_comments,
+    } = class_;
+
+    const comment = await Comment.find({ id_class: class_.id })
+    .sort({ date_created: -1 })
+    .limit(1);
+
+    console.log(comment);
+
+    if (comment[0]) {
+      last_comment = comment[0].comment;
+      last_comment_date = comment[0].date_created;
+      const classToSend = {
+        _id,
+        name,
+        description,
+        video,
+        date_init,
+        date_end,
+        date_created,
+        date_updated,
+        total_comments,
+        last_comment,
+        last_comment_date,
+      };
+      classesToSend.push(classToSend);
+    } else {
+      const classToSend = {
+        _id,
+        name,
+        description,
+        video,
+        date_init,
+        date_end,
+        date_created,
+        date_updated,
+        total_comments,
+      };
+      classesToSend.push(classToSend);
+    }
+  }
+  res.send(classesToSend);
 };
 
 export const getClassById: controllerFunction = async (req, res, next) => {
