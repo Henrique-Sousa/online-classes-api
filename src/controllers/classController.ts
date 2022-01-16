@@ -40,3 +40,24 @@ export const getClassById: controllerFunction = async (req, res, next) => {
   const classResult = await Class.findById(req.params.id);
   res.send(classResult);
 };
+
+export const updateClass: controllerFunction = async (req, res, next) => {
+  const {
+    name, description, video, date_init, date_end,
+  } = req.body;
+
+  const date_updated = new Date(Date.now());
+
+  const newClass = new Class({
+    _id: req.params.id,
+    name,
+    description,
+    video,
+    date_init,
+    date_end,
+    date_updated,
+    total_comments: 0,
+  });
+  await Class.findByIdAndUpdate(req.params.id, newClass);
+  res.end();
+};
