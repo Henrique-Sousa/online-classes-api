@@ -71,6 +71,12 @@ export const createComment: controllerFunction = async (req, res, next) => {
   if (req.body
       && req.body.id_class
       && req.body.comment) {
+    const classResult = await Class.findById(req.body.id_class);
+
+    if (!classResult) {
+      res.send('Class id not found on database\n');
+    }
+
     const {
       id_class, comment,
     } = req.body;
@@ -84,6 +90,7 @@ export const createComment: controllerFunction = async (req, res, next) => {
     });
     await newComment.save();
   }
+
   res.end();
 };
 
