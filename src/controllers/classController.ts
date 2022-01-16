@@ -1,5 +1,6 @@
 import { controllerFunction } from './functions';
 import Class from '../models/class';
+import Comment from '../models/comment';
 
 export const createClass: controllerFunction = async (req, res, next) => {
   if (req.body
@@ -64,4 +65,24 @@ export const updateClass: controllerFunction = async (req, res, next) => {
 export const deleteClass: controllerFunction = async (req, res, next) => {
   await Class.findByIdAndRemove(req.params.id);
   res.end();
-}
+};
+
+export const createComment: controllerFunction = async (req, res, next) => {
+  if (req.body
+      && req.body.id_class
+      && req.body.comment) {
+    const {
+      id_class, comment,
+    } = req.body;
+
+    const date_created = new Date(Date.now());
+
+    const newComment = new Comment({
+      id_class,
+      comment,
+      date_created,
+    });
+    await newComment.save();
+  }
+  res.end();
+};
