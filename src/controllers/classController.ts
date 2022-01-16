@@ -89,6 +89,11 @@ export const createComment: controllerFunction = async (req, res, next) => {
       date_created,
     });
     await newComment.save();
+
+    await Class.findOneAndUpdate(
+      { _id: id_class },
+      { $inc: { total_comments: 1 } },
+    );
   }
 
   res.end();
