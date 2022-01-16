@@ -88,12 +88,8 @@ test('GET /classes/:id', async () => {
   await insertObject(class1);
   await insertObject(class2);
 
-  const classes = await request(app)
-    .get('/classes')
-    .expect('Content-Type', /json/)
-    .expect(200);
-
-  const id = classes.body[0]._id;
+  const classes = await Class.find();
+  const id = classes[0]._id;
 
   const result = await request(app)
     .get(`/classes/${id}`)
@@ -117,12 +113,8 @@ test('POST /classes', async () => {
 test('PUT /classes/:id', async () => {
   await insertObject(class1);
 
-  const classes = await request(app)
-    .get('/classes')
-    .expect('Content-Type', /json/)
-    .expect(200);
-
-  const id = classes.body[0]._id;
+  const classes = await Class.find();
+  const id = classes[0]._id;
 
   await request(app)
     .put(`/classes/${id}`)
