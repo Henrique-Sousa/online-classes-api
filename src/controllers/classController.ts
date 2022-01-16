@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request } from 'express';
 import { controllerFunction } from './functions';
 import Class from '../models/class';
 
