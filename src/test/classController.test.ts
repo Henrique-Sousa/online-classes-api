@@ -219,3 +219,39 @@ test('GET /classes/:id/comments', async () => {
   expect(result.body[0].id_class).toBe(class_id.toString());
   expect(result.body[1].comment).toBe('segundo comentario');
 });
+
+test('DELETE /classes/comments/:id', async () => {
+  await insertClass(class1);
+
+  const classes = await Class.find();
+  const class_id = classes[0]._id;
+
+  const comment1 = new Comment({
+    id_class: class_id,
+    comment: 'primeiro comentario',
+    date_created: new Date(Date.now()),
+  });
+
+  const comment2 = new Comment({
+    id_class: class_id,
+    comment: 'segundo comentario',
+    date_created: new Date(Date.now()),
+  });
+
+  await comment1.save();
+  await comment2.save();
+
+  const comment_a = await Comment.find({ comment: 'primeiro comentario' });
+  const comment = comment_a[0];
+  const comment_id = comment._id.toString();
+
+  const result = await request(app)
+    .delete(`/classes/comments/${comment_id}`);
+
+  const comments = await Comment.find();
+  expect(comments);
+  if (comments) {
+    expect(comments.length).toBe(1);
+    expect(comments[0].comment).toBe('segundo comentario');
+  }
+});
