@@ -8,7 +8,7 @@ import {
   deleteClass,
   createComment,
   getClassComments,
-//  deleteComment,
+  deleteComment,
 } from '../controllers/classController';
 
 const classes = Router();
@@ -21,6 +21,6 @@ classes.delete('/:id', deleteClass);
 
 classes.post('/comments/', createComment);
 classes.get('/:id/comments/', getClassComments);
-// classes.delete('/comments/:id', deleteComment);
+classes.delete('/comments/:id', deleteComment);
 
 export default classes;

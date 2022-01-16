@@ -91,3 +91,8 @@ export const getClassComments: controllerFunction = async (req, res, next) => {
   const comments = await Comment.find({ id_class: req.params.id });
   res.send(comments);
 };
+
+export const deleteComment: controllerFunction = async (req, res, next) => {
+  await Comment.findByIdAndRemove(req.params.id);
+  res.end();
+};
