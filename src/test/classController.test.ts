@@ -110,3 +110,21 @@ test('POST /classes', async () => {
     expect(result[0].description).toBe('Primeira aula');
   }
 });
+
+test('PUT /classes/:id', async () => {
+  insertObject(class1);
+  await request(app)
+    .post('/classes')
+    .send({
+      name: 'Aula um',
+      video: 'url um',
+    });
+
+  const result = await Class.find();
+  expect(result);
+  if (result) {
+    expect(result[0].name).toBe('Aula um');
+    expect(result[0].description).toBe('Primeira aula');
+    expect(result[0].video).toBe('url um');
+  }
+});
