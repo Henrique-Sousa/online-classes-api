@@ -15,6 +15,7 @@ beforeEach(() => (
 afterEach(async () => {
   await Class.remove({ name: 'Aula 1' });
   await Class.remove({ name: 'Aula 2' });
+  await Class.remove({ name: 'Aula um' });
   await connection.close();
 });
 
@@ -24,6 +25,7 @@ interface SentData {
   video: string
   date_init: Date,
   date_end: Date,
+  date_created: Date,
 }
 
 const class1: SentData = {
@@ -32,6 +34,7 @@ const class1: SentData = {
   video: 'url 1',
   date_init: new Date('2021-02-01'),
   date_end: new Date('2021-02-31'),
+  date_created: new Date('2021-01-25'),
 };
 
 const class2: SentData = {
@@ -40,15 +43,15 @@ const class2: SentData = {
   video: 'url 2',
   date_init: new Date('2021-03-01'),
   date_end: new Date('2021-03-31'),
+  date_created: new Date('2021-02-25'),
 };
 
 async function insertObject(class_: SentData) {
   const {
-    name, description, video, date_init, date_end,
+    name, description, video, date_init, date_end, date_created,
   } = class_;
 
-  const date_created = new Date(Date.now());
-  const date_updated = new Date(Date.now());
+  const date_updated = date_created;
 
   const newClass = new Class({
     name,
@@ -134,5 +137,8 @@ test('PUT /classes/:id', async () => {
     expect(result[0].name).toBe('Aula um');
     expect(result[0].description).toBe('Primeira aula');
     expect(result[0].video).toBe('url um');
+    expect(result[0].date_created.toISOString()).toMatch(/2021-01-25/);
+    const dateNow = (new Date(Date.now())).toISOString().slice(0, 10);
+    expect(result[0].date_updated.toISOString()).toMatch(new RegExp(dateNow));
   }
 });
