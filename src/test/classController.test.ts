@@ -1,7 +1,8 @@
 import request from 'supertest';
 import express from 'express';
-import { connect, connection } from 'mongoose';
+import { connect, connection, Types } from 'mongoose';
 import Class from '../models/class';
+import Comment from '../models/comment';
 import classesRouter from '../routes/classes';
 
 async function run(): Promise<void> {
@@ -16,6 +17,7 @@ afterEach(async () => {
   await Class.remove({ name: 'Aula 1' });
   await Class.remove({ name: 'Aula 2' });
   await Class.remove({ name: 'Aula um' });
+  await Comment.remove({ comment: 'primeiro comentario' });
   await connection.close();
 });
 
@@ -165,5 +167,24 @@ test('delete a non existent class', async () => {
   expect(result);
   if (result) {
     expect(result.length).toBe(2);
+  }
+});
+
+test('POST /classes/comments', async () => {
+  await insertObject(class1);
+
+  const classes = await Class.find();
+  const class_id = classes[0]._id;
+
+  await request(app)
+    .post('/classes/comments')
+    .send({ id_class: class_id, comment: 'primeiro comentario' });
+
+  const result = await Comment.find();
+  console.log(result[0].id_class);
+  expect(result);
+  if (result) {
+    expect(result[0].id_class).toStrictEqual(new Types.ObjectId(class_id));
+    expect(result[0].comment).toBe('primeiro comentario');
   }
 });
