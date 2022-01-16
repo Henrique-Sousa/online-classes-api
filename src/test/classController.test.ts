@@ -114,7 +114,7 @@ test('POST /classes', async () => {
 test('PUT /classes/:id', async () => {
   insertObject(class1);
   await request(app)
-    .post('/classes')
+    .put('/classes')
     .send({
       name: 'Aula um',
       video: 'url um',
