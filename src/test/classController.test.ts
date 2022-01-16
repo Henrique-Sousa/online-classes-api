@@ -73,8 +73,8 @@ app.use(express.json());
 app.use('/classes', classesRouter);
 
 test('GET /classes', async () => {
-  insertObject(class1);
-  insertObject(class2);
+  await insertObject(class1);
+  await insertObject(class2);
 
   const result = await request(app)
     .get('/classes')
@@ -85,8 +85,8 @@ test('GET /classes', async () => {
 });
 
 test('GET /classes/:id', async () => {
-  insertObject(class1);
-  insertObject(class2);
+  await insertObject(class1);
+  await insertObject(class2);
 
   const classes = await request(app)
     .get('/classes')
@@ -115,7 +115,7 @@ test('POST /classes', async () => {
 });
 
 test('PUT /classes/:id', async () => {
-  insertObject(class1);
+  await insertObject(class1);
 
   const classes = await request(app)
     .get('/classes')
