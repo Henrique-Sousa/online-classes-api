@@ -86,3 +86,8 @@ export const createComment: controllerFunction = async (req, res, next) => {
   }
   res.end();
 };
+
+export const getClassComments: controllerFunction = async (req, res, next) => {
+  const comments = await Comment.find({ id_class: req.params.id });
+  res.send(comments);
+};

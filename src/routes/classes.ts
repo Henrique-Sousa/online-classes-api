@@ -7,7 +7,7 @@ import {
   updateClass,
   deleteClass,
   createComment,
-//  getClassComments,
+  getClassComments,
 //  deleteComment,
 } from '../controllers/classController';
 
@@ -20,7 +20,7 @@ classes.put('/:id', updateClass);
 classes.delete('/:id', deleteClass);
 
 classes.post('/comments/', createComment);
-// classes.get('/comments/', getClassComments);
+classes.get('/:id/comments/', getClassComments);
 // classes.delete('/comments/:id', deleteComment);
 
 export default classes;
