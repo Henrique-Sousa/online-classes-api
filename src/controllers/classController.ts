@@ -54,8 +54,6 @@ export const getAllClasses: controllerFunction = async (req, res, next) => {
     .sort({ date_created: -1 })
     .limit(1);
 
-    console.log(comment);
-
     if (comment[0]) {
       last_comment = comment[0].comment;
       last_comment_date = comment[0].date_created;
@@ -93,7 +91,37 @@ export const getAllClasses: controllerFunction = async (req, res, next) => {
 
 export const getClassById: controllerFunction = async (req, res, next) => {
   const classResult = await Class.findById(req.params.id);
-  res.send(classResult);
+  if (classResult) {
+    const {
+      _id,
+      name,
+      description,
+      video,
+      date_init,
+      date_end,
+      date_created,
+      date_updated,
+      total_comments,
+    } = classResult;
+    const comments = await Comment.find({ id_class: req.params.id })
+    .sort({ date_created: -1 })
+    .limit(3);
+    const classToSend = {
+      _id,
+      name,
+      description,
+      video,
+      date_init,
+      date_end,
+      date_created,
+      date_updated,
+      total_comments,
+      comments: comments.map((c) => c.comment),
+    };
+    res.send(classToSend);
+  } else {
+    res.end();
+  }
 };
 
 export const updateClass: controllerFunction = async (req, res, next) => {
