@@ -134,3 +134,20 @@ test('PUT /classes/:id', async () => {
     expect(result[0].date_updated.toISOString()).toMatch(new RegExp(dateNow));
   }
 });
+
+test('DELETE /classes/:id', async () => {
+  await insertObject(class1);
+  await insertObject(class2);
+
+  const classes = await Class.find();
+  const id = classes[0]._id;
+
+  await request(app)
+    .delete(`/classes/${id}`);
+
+  const result = await Class.find();
+  expect(result);
+  if (result) {
+    expect(result.length).toBe(1);
+  }
+});
