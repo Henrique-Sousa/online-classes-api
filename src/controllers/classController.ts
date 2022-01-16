@@ -61,3 +61,8 @@ export const updateClass: controllerFunction = async (req, res, next) => {
   await Class.findByIdAndUpdate(req.params.id, newClass);
   res.end();
 };
+
+export const deleteClass: controllerFunction = async (req, res, next) => {
+  await Class.findByIdAndRemove(req.params.id);
+  res.end();
+}
