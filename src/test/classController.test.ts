@@ -113,8 +113,16 @@ test('POST /classes', async () => {
 
 test('PUT /classes/:id', async () => {
   insertObject(class1);
+
+  const classes = await request(app)
+    .get('/classes')
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  const id = classes.body[0]._id;
+
   await request(app)
-    .put('/classes')
+    .put(`/classes/${id}`)
     .send({
       name: 'Aula um',
       video: 'url um',
