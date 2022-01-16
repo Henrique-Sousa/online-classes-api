@@ -18,6 +18,7 @@ afterEach(async () => {
   await Class.remove({ name: 'Aula 2' });
   await Class.remove({ name: 'Aula um' });
   await Comment.remove({ comment: 'primeiro comentario' });
+  await Comment.remove({ comment: 'segundo comentario' });
   await connection.close();
 });
 
@@ -181,10 +182,40 @@ test('POST /classes/comments', async () => {
     .send({ id_class: class_id, comment: 'primeiro comentario' });
 
   const result = await Comment.find();
-  console.log(result[0].id_class);
   expect(result);
   if (result) {
     expect(result[0].id_class).toStrictEqual(new Types.ObjectId(class_id));
     expect(result[0].comment).toBe('primeiro comentario');
   }
+});
+
+test('GET /classes/:id/comments', async () => {
+  await insertClass(class1);
+
+  const classes = await Class.find();
+  const class_id = classes[0]._id;
+
+  const comment1 = new Comment({
+    id_class: class_id,
+    comment: 'primeiro comentario',
+    date_created: new Date(Date.now()),
+  });
+
+  const comment2 = new Comment({
+    id_class: class_id,
+    comment: 'segundo comentario',
+    date_created: new Date(Date.now()),
+  });
+
+  await comment1.save();
+  await comment2.save();
+
+  const result = await request(app)
+    .get(`/classes/${class_id}/comments`)
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  expect(result.body.length).toBe(2);
+  expect(result.body[0].id_class).toBe(class_id.toString());
+  expect(result.body[1].comment).toBe('segundo comentario');
 });
