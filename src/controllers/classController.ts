@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { controllerFunction } from './functions';
 import Class from '../models/class';
 
