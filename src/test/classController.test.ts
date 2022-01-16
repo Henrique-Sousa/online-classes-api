@@ -151,3 +151,19 @@ test('DELETE /classes/:id', async () => {
     expect(result.length).toBe(1);
   }
 });
+
+test('delete a non existent class', async () => {
+  await insertObject(class1);
+  await insertObject(class2);
+
+  const id = '61e33691e908be32287ee4bf';
+
+  await request(app)
+    .delete(`/classes/${id}`);
+
+  const result = await Class.find();
+  expect(result);
+  if (result) {
+    expect(result.length).toBe(2);
+  }
+});
