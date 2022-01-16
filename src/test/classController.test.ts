@@ -48,7 +48,7 @@ const class2: SentData = {
   date_created: new Date('2021-02-25'),
 };
 
-async function insertObject(class_: SentData) {
+async function insertClass(class_: SentData) {
   const {
     name, description, video, date_init, date_end, date_created,
   } = class_;
@@ -75,8 +75,8 @@ app.use(express.json());
 app.use('/classes', classesRouter);
 
 test('GET /classes', async () => {
-  await insertObject(class1);
-  await insertObject(class2);
+  await insertClass(class1);
+  await insertClass(class2);
 
   const result = await request(app)
     .get('/classes')
@@ -87,8 +87,8 @@ test('GET /classes', async () => {
 });
 
 test('GET /classes/:id', async () => {
-  await insertObject(class1);
-  await insertObject(class2);
+  await insertClass(class1);
+  await insertClass(class2);
 
   const classes = await Class.find();
   const id = classes[0]._id;
@@ -113,7 +113,7 @@ test('POST /classes', async () => {
 });
 
 test('PUT /classes/:id', async () => {
-  await insertObject(class1);
+  await insertClass(class1);
 
   const classes = await Class.find();
   const id = classes[0]._id;
@@ -138,8 +138,8 @@ test('PUT /classes/:id', async () => {
 });
 
 test('DELETE /classes/:id', async () => {
-  await insertObject(class1);
-  await insertObject(class2);
+  await insertClass(class1);
+  await insertClass(class2);
 
   const classes = await Class.find();
   const id = classes[0]._id;
@@ -155,8 +155,8 @@ test('DELETE /classes/:id', async () => {
 });
 
 test('delete a non existent class', async () => {
-  await insertObject(class1);
-  await insertObject(class2);
+  await insertClass(class1);
+  await insertClass(class2);
 
   const id = '61e33691e908be32287ee4bf';
 
@@ -171,7 +171,7 @@ test('delete a non existent class', async () => {
 });
 
 test('POST /classes/comments', async () => {
-  await insertObject(class1);
+  await insertClass(class1);
 
   const classes = await Class.find();
   const class_id = classes[0]._id;
