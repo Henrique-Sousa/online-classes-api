@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
-    "build": "tsc",
+    "start": "node build/src/index.js",
+    "build": "tsc && cp *.pem ./build",
     "clean": "rm -rf build",
     "test": "jest",
-    "lint": "eslint \"**/*.{js,ts}\""
+    "lint": "eslint \"**/*.{js,ts}\"",
+    "keys": "tsc generateKeyPair.ts && node generateKeyPair.js"
   },
   "repository": {
     "type": "git",
@@ -21,10 +22,18 @@
   },
   "homepage": "https://gitlab.com/Henrique-Sousa/tindin-teste-desenvolvedor-backend#readme",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^27.4.0",
+    "@types/jsonwebtoken": "^8.5.7",
+    "@types/passport": "^1.0.7",
+    "@types/passport-jwt": "^3.0.6",
     "@types/supertest": "^2.0.11",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.6",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
     "supertest": "^6.2.1"
   },
   "devDependencies": {
