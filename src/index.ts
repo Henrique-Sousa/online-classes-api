@@ -1,6 +1,9 @@
 import express from 'express';
 import { connect } from 'mongoose';
+import passport from 'passport';
+import './config/passportConfig';
 import classesRouter from './routes/classes';
+import logUserIn from './controllers/userController';
 
 type Request = express.Request;
 type Response = express.Response;
@@ -14,6 +17,8 @@ run().catch((err) => console.log(err));
 
 const app = express();
 
+app.use(passport.initialize());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -25,6 +30,7 @@ app.all('*', (_req: Request, res: Response, next: NextFunction): void => {
   next();
 });
 
+app.post('/users', logUserIn);
 app.use('/classes', classesRouter);
 
 app.listen(3000);

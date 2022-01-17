@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import passport from 'passport';
 import {
   createClass,
   getAllClasses,
@@ -13,14 +13,14 @@ import {
 
 const classes = Router();
 
-classes.post('/', createClass);
-classes.get('/', getAllClasses);
-classes.get('/:id', getClassById);
-classes.put('/:id', updateClass);
-classes.delete('/:id', deleteClass);
+classes.post('/', passport.authenticate('jwt', { session: false }), createClass);
+classes.get('/', passport.authenticate('jwt', { session: false }), getAllClasses);
+classes.get('/:id', passport.authenticate('jwt', { session: false }), getClassById);
+classes.put('/:id', passport.authenticate('jwt', { session: false }), updateClass);
+classes.delete('/:id', passport.authenticate('jwt', { session: false }), deleteClass);
 
-classes.post('/comments/', createComment);
-classes.get('/:id/comments/', getClassComments);
-classes.delete('/comments/:id', deleteComment);
+classes.post('/comments/', passport.authenticate('jwt', { session: false }), createComment);
+classes.get('/:id/comments/', passport.authenticate('jwt', { session: false }), getClassComments);
+classes.delete('/comments/:id', passport.authenticate('jwt', { session: false }), deleteComment);
 
 export default classes;
