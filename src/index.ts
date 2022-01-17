@@ -31,6 +31,6 @@ app.all('*', (_req: Request, res: Response, next: NextFunction): void => {
 });
 
 app.post('/users', logUserIn);
-app.use('/classes', classesRouter);
+app.use('/classes', passport.authenticate('jwt', { session: false }), classesRouter);
 
 app.listen(3000);
