@@ -6,16 +6,15 @@ import { controllerFunction } from './functions';
 import User from '../models/user';
 
 const logUserIn: controllerFunction = async (req, res, next) => {
-  const { username, password } = req.body;
-
-  console.log(username);
+  const { name, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ name });
+    console.log(user);
 
     if (!user) {
       res.status(401);
-      res.send(`Could not find user with username [${username}].`);
+      res.send(`Could not find user with name [${name}].`);
     } else {
       const result = await bcrypt.compare(password, user.password);
 
