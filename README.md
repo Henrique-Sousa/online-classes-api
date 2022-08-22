@@ -32,7 +32,7 @@ save a user on the database with the following fields
 ```
 
 using `curl` e `jq` \
-to login and save the token on the variable `TOKEN`:
+to login and save the token on the variable `TOKEN`
 ```bash
 TOKEN=$(curl -s -X POST -H 'Content-Type: application/json' --data '{"name": "user1", "password": "123456" }' localhost:3000/users  | jq -r '.token')
 ```
