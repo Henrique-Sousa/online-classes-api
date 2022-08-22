@@ -1,28 +1,28 @@
 # Classes API
 
-to run, first install
+To run, first install
 ```bash
 npm i
 ```
 
-then create the public and private keys:
+then create the public and private keys
 ```bash
 npm run keys
 ```
 
-transpile the code:
+transpile the code
 ```bash
 npm run build
 ```
 
-and run:
+and run
 ```
 npm start
 ```
 
 <br>
 
-save a user on the database with the following fields:
+save a user on the database with the following fields
 ```
 {
   name: 'user1',
@@ -31,13 +31,13 @@ save a user on the database with the following fields:
 }
 ```
 
-using `curl` e `jq`: \
+using `curl` e `jq` \
 to login and save the token on the variable `TOKEN`:
 ```bash
 TOKEN=$(curl -s -X POST -H 'Content-Type: application/json' --data '{"name": "user1", "password": "123456" }' localhost:3000/users  | jq -r '.token')
 ```
 
-to access a protected endpoint:
+to access a protected endpoint
 ```bash
 curl -s -X GET -H "Authorization: $TOKEN" localhost:3000/classes | jq
 ```
