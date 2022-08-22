@@ -1,4 +1,4 @@
-# Classes API
+# Online Classes API
 
 To run, first install
 ```bash
